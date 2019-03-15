@@ -1,0 +1,45 @@
+---
+title: "CSDE Homework 9"
+author: "Cathea M. Carey"
+date: "3/14/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(readr)
+estonia_full <- read_delim("~/Documents/GitHub/CSDE502/estonia.txt", 
+  " ", escape_double = FALSE, trim_ws = TRUE)
+
+##load packages
+library(uwIntroStats)
+library(FSA)
+library(knitr)
+library(scales)
+library(estimatr)
+library(stats)
+library(ggplot2)
+library(easyGgplot2)
+library(epitools)
+library(oddsratio)
+```
+
+Estonia, Life expectancy at birth (period, 1x1)	Last modified: 20 Sep 2018; Methods Protocol: v6 (2017) #WARNING: The quality of population estimates for 1990-1999 is lower than in prior and later years and these data should be used with caution. For details, please see the "Data Quality Issues" section of the Background and Documentation file (for Estonia).
+
+Background: Estonia facts for RMD: Courtesy of IHME (http://www.healthdata.org/estonia), Estonia is a country of 1.3 Million and a 28,542 GDP in 2017. 
+
+Objective and Methods: Explore the association between Life Expectancy and Years. Conduct a linear regression between life expectancy and years.
+
+```{r plot}
+plot(Total~Year, data = estonia_full, main= "Life Expectancy in Estonia, 1959-2017", xlab= "Year", ylab = "Life Expectancy Age (in Years)", col="blue", type="l")
+```
+
+The lowest observed Life Expectancy occurred between 1990-2000.
+
+```{r pressure, echo=FALSE}
+model1<-regress("mean", Total~Year, data = estonia_full)
+model1
+```
+
+Our model exploring the association between year (between 1959 to 2017) and the life expectancy age (in years) suggests that for each 1-unit increase in age, we saw a 0.11 increase in life expectantcy in years (95% CI = 0.077; 0.141, p<0.005). 
